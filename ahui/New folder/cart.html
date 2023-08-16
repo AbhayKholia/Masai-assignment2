@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <style>
+      #cart{
+        width:90%;
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap:20px;
+        margin:auto;
+        /* border: 1px solid red; */
+      }
+      img{
+        width:100%;
+        height: 200px;
+      }
+      #cart>div{sssssss
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+      #cart>div>p{
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+      button:hover{
+        background-color: teal;
+      }
+      button{
+        display: block;
+        margin: auto;
+        background-color: blue;
+        color:white;
+        border:none;
+        border-radius: 5px;
+        padding:5px 10px 5px 10px;
+        justify-content: stretch;
+        margin-bottom:10px;
+      }
+      body>div:first-child{
+        width:fit-content;
+        font-size: 1.6rem;
+        font-weight: 500;
+        background-color: black;
+        color:white;
+        padding-left:10px;
+      }#checkout{
+        display: block;
+        margin:auto;
+        padding: 10px 30px 10px 30px;
+        margin-top:30px;
+        font-size: 2rem;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div >
+      <h2 id="cart_total">0</h2>
+      <!--Show cart total with id:- "cart_total" here, do not add anything only Total value. Not even "Total - 1200Rs" but like this "1200" -->
+    </div>
+    <div id="cart">
+      <!--Show items added to cart here-->
+      <!-- add an remove button to each item so that you can remove that dish from cart, give the button HTML class as 'remove' -->
+    </div>
+<button id="checkout"> Checkout</button>
+    <!-- Provide a checkout button with id as "checkout" to go to checkout.html page -->
+  </body>
+</html>
+<script>
+    let cartdata=JSON.parse(localStorage.getItem("cart_items")) || [];
+display(cartdata)
+
+function display(data){
+    let s=0;
+    data.forEach(function(elem,id){
+        let box=document.createElement("div");
+        let img=document.createElement("img");
+        img.src=elem.image;
+        let p1=document.createElement("p");
+        p1.innerText=elem.name;
+        let p2=document.createElement("p");
+        p2.innerText=elem.price;
+        s+=Number(elem.price);
+        document.querySelector("#cart_total").innerText=s;
+        let btn=document.createElement("button");
+        btn.innerText="Remove";
+        btn.setAttribute("class","remove");
+        btn.addEventListener("click",function(){
+            remove(id);
+        })
+
+        box.append(img,p1,p2,btn);
+        document.querySelector("#cart").append(box);
+    });
+    
+}
+function remove(id){
+    cartdata.splice(id,1);
+    localStorage.setItem("cart_items",JSON.stringify(cartdata));
+    window.location.reload();
+}
+
+document.querySelector("#checkout").addEventListener("click",checkout);
+
+function checkout(){
+    let n=document.querySelector("#cart_total").innerText
+if(n<700){
+    window.location.href="checkout.html";}
+else{
+    alert("Insufficient Balance")
+}
+}
+</script>

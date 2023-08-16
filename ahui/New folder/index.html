@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <style>
+      #groceries{
+        width:90%;
+        height: auto;
+        margin: auto;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        gap:20px;
+      }
+      img{
+        width:100%;
+        height: 200px;
+      }
+      #groceries>div{
+        display: flex;
+        flex-direction: column;
+        justify-content: stretch;
+        box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+      }
+      #groceries>div>p{
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 500;
+      }
+      button:hover{
+        background-color: teal;
+      }
+      button{
+        display: flex;
+        margin: auto;
+        background-color: blue;
+        color:white;
+        border:none;
+        border-radius: 5px;
+        padding:5px 10px 5px 10px;
+        justify-content: stretch;
+        margin-bottom:10px;
+      }
+      #navbar{
+        display: flex;
+        justify-content: space-around;
+        font-size: 1.6rem;
+        background-color: black;
+        color:white;
+        font-weight: 500;
+       margin-bottom: 30px;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+      }
+      a{
+        text-decoration:none;
+        color:white;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <div id="navbar">
+      <div>login</div>
+      <div>Sign-Up</div>
+      <div><a href="cart.html" id="cart">Cart</a></div>
+      <div><a href="checkout.html">Checkout</a></div>
+      <!-- Give cart link for navigation with id:- cart   -->
+      <!-- For wallet amount Show only number i.e only "500", no extra text like "amount = 500" with id :- "wallet" -->
+    </div>
+    <div id="groceries"></div>
+    <!--Show all groceries here in grid format-->
+    <!-- add an add to cart button to each item, give it HTML class as 'add_to_cart' -->
+  </body>
+</html>
+<script>
+    fetch("https://grocery-masai.herokuapp.com/items")
+    .then(function(res){
+    return res.json()
+    .then(function(res){
+        // console.log(res.data);
+      display(res.data);
+    })
+ }).catch(function(rej){ 
+     console.log(rej);
+ })
+
+
+
+ function display(data){
+    data.forEach(function(el,id){
+        let box=document.createElement("div");
+        box.setAttribute("class","item")
+        let img=document.createElement("img");
+        img.src=el.image;
+        let p1=document.createElement("p");
+        p1.innerText=el.name;
+        let p2=document.createElement("p");
+        p2.innerText=el.price;
+        let btn=document.createElement("button");
+        btn.innerText="Add to Cart";
+        btn.setAttribute("class","add_to_cart");
+        btn.addEventListener("click",function(){
+            addtocart(el);
+        })
+
+        box.append(img,p1,p2,btn);
+        document.querySelector("#groceries").append(box);
+    })
+ }
+ 
+ function addtocart(el){
+let arr=JSON.parse(localStorage.getItem("cart_items")) || [];
+
+if(check(el,arr)){
+    alert("Add Successfully")
+arr.push(el);
+localStorage.setItem("cart_items",JSON.stringify(arr));
+}else{
+    alert("Already In Cart")
+}
+
+ }
+ function check(el,arr){
+    let x=arr.filter(function(elm){
+        return el.name===elm.name;
+    })
+    if(x.length>0){
+        return false;
+    }else{
+        return true;
+    }
+ }
+</script>

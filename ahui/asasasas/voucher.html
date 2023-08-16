@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Document</title>
+    <style>
+      #voucher_list{
+        display:grid;
+        grid-template-columns: repeat(4,1fr);
+        gap: 10px;
+        margin-top: 35px;
+
+      }
+      #voucher_list>div{
+        border: 1px solid red;
+      }
+      .voucher{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        font-family: sans-serif;
+      }
+      button:hover{
+        background-color: greenyellow;
+        cursor: pointer;
+        border-style: dotted;
+      }
+      img{
+        width: 100%;
+        height: 250px;
+      }
+      #navbar-2{
+        display: flex;
+        justify-content: space-between;
+        background-color: goldenrod;
+        height: 65px;
+        align-items: center;
+      }
+      a{
+        text-decoration:none;
+      }
+      *{
+        font-family: sans-serif;
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+    <script defer src=".//scripts/voucher.js"></script>
+  </head>
+  <body>
+    <!-- Wallet balence id:- "wallet_balance" (only number). -->
+    <!-- - The voucher card will have class :- "voucher".
+  - All the vouchers will be appended inside div with id "voucher_list".
+  - Buy button will have class:- "buy_voucher"
+  - All the purchased voucher will be stored with key :- "purchase". -->
+  <div id="navbar-2">
+    <div><h1>Buy voucher</h1></div>
+    <div id="wallet_balance">0</div>
+    <div><a href="purchase.html">Purchaseed Voucher</a></div>
+
+  </div>
+ 
+  <div id="voucher_list">
+
+  </div>
+
+  </body>
+</html>
